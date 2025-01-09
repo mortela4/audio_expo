@@ -8,12 +8,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 
-EXPORT_TO_FILE = False
-
-
-
-
-#play(sound)
+TEST_FILE = "data/kvist_som_knekker.mp3"
 
 
 def get_samples_from_segment(segment: AudioSegment=None, show_samples: bool=False) -> list:
@@ -31,6 +26,7 @@ def get_samples_from_segment(segment: AudioSegment=None, show_samples: bool=Fals
 
 
 def get_data_from_samples(raw_data: list=None) -> None:
+    """ Get MAX/MIN-samplevalues from raw data, and calculate average 'level' (absolute value). """
     min_val = min(raw_data)
     max_val = max(raw_data)
     mean_val = 0
@@ -48,6 +44,7 @@ def get_data_from_samples(raw_data: list=None) -> None:
      
 
 def get_audio_segment(audio_filename: str=None, start_time: int=0, end_time: int=0, export_to_file: bool=False, play_segment: bool=True, audio_format: str="mp3") -> AudioSegment:
+    """ Get part of audio file, limited by a START and END time (in milliseconds), and - optionally - play the audio, and write the segment to file (in 'data' folder). """
     if not audio_filename:
         return None
     #
@@ -59,7 +56,8 @@ def get_audio_segment(audio_filename: str=None, start_time: int=0, end_time: int
     #
     if export_to_file:
         out_filename = input("Give name of output file: ")
-        segment.export(out_filename, format=audio_format)
+        out_filepath = "data/" + out_filename
+        segment.export(out_filepath, format=audio_format)
         print(f"Audio written to {out_filename} ...")
     #
     return segment
@@ -67,7 +65,7 @@ def get_audio_segment(audio_filename: str=None, start_time: int=0, end_time: int
 
 # ****************************************** Functional Test *****************************************
 if __name__ == '__main__':
-    snip = get_audio_segment(audio_filename="kvist_som_knekker.mp3", start_time=0, end_time=600)
+    snip = get_audio_segment(audio_filename=TEST_FILE, start_time=0, end_time=600)
     samples = get_samples_from_segment(segment=snip)
     get_data_from_samples(raw_data=samples)
 
