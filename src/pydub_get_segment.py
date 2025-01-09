@@ -65,7 +65,7 @@ def get_audio_segment(audio_filename: str=None, start_time: int=0, end_time: int
 
 # ****************************************** Functional Test *****************************************
 if __name__ == '__main__':
-    snip = get_audio_segment(audio_filename=TEST_FILE, start_time=0, end_time=600)
+    snip = get_audio_segment(audio_filename=TEST_FILE, start_time=1200, end_time=1600, export_to_file=True)
     samples = get_samples_from_segment(segment=snip)
     get_data_from_samples(raw_data=samples)
 
